@@ -141,6 +141,8 @@ class Model_Layout {
 <link rel="manifest" href="/manifest.json"/>
 <link rel="shortcut icon" href="/img/site/caveira.png" type="image/x-icon">
 <link rel="icon" href="/img/site/caveira.png" type="image/x-icon">
+<script src="/js/MS.min.js{{cache}}"></script>
+		
 php;
 
 		return $header;

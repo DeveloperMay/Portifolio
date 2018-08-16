@@ -96,19 +96,6 @@ gulp.task('MS_producao', function(cb){
     .pipe(notify({ title:projeto+' - Produção', message: msg }));
 });
 
-gulp.task('jQuery_producao', function(cb){
-  // Função compila o MS.JS SEM Map para produção
-  return gulp.src('js/js/jQuery/jQuery.js')
-    .pipe(uglify())
-    .pipe(rename('jQuery.min.js'))
-    .pipe(gulp.dest('js'))
-    .on('error', function(err) {
-        notify().write(err);
-        this.emit('end');
-    })
-    .pipe(notify({ title:projeto+' - Produção', message: msg }));
-});
-
 gulp.task('site_producao', function(cb){
   // Função compila o SITE.JS SEM Map para produção
   return gulp.src(contate_site)
@@ -122,19 +109,6 @@ gulp.task('site_producao', function(cb){
     .pipe(notify({ title:projeto+' - Produção', message: msg }));
 });
 
-gulp.task('jQuery', function(cb){
-  // Função compila o MS.JS com Map para Debugar
-  return gulp.src('js/js/jQuery/jQuery.js')
-    .pipe(sourcemaps.init())
-    .pipe(rename('jQuery.min.js'))
-    .pipe(sourcemaps.write('./map'))
-    .pipe(gulp.dest('js'))
-    .on('error', function(err) {
-        notify().write(err);
-        this.emit('end');
-    })
-    .pipe(notify({ title:projeto+' - Desenvolvimento', message: msg }));
-});
 gulp.task('MS', function(cb){
   // Função compila o MS.JS com Map para Debugar
   return gulp.src('js/js/MS/MS.js')
@@ -193,7 +167,6 @@ gulp.task('scss', function(){
 gulp.task('default', function() {
     gulp.watch(['css/scss/**/*.scss'],['scss']);
     gulp.watch('js/js/MS/MS.js', ['MS']);
-    gulp.watch('js/js/jQuery/jQuery.js', ['jQuery']);
     gulp.watch('js/js/**.js', ['site']);
 });
 
@@ -203,13 +176,11 @@ gulp.task('css', function() {
 
 gulp.task('js', function() {
   gulp.watch('js/js/MS/MS.js', ['MS']);
-  gulp.watch('js/js/jQuery/jQuery.js', ['jQuery']);
   gulp.watch('js/js/**.js', ['site']);
 });
 
 gulp.task('producao', function() {
   gulp.watch('css/scss/**/*.scss',['scss_producao']);
   gulp.watch('js/js/MS/MS.js', ['MS_producao']);
-  gulp.watch('js/js/jQuery/jQuery.js', ['jQuery_producao']);
   gulp.watch('js/js/**.js', ['site_producao']);
 });

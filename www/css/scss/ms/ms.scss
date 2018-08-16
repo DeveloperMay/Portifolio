@@ -16,17 +16,9 @@
 .inline-block{
 	display: inline-block;
 }
-.width-50 {
-	width: 50%;
-}
-.pd-left{
-	padding-left: 10px;
-	@include border-box;
-}
-.pd-right{
-	padding-right: 10px;
-	@include border-box;
-}
+
+
+
 
 
 	
@@ -89,4 +81,29 @@
 }
 .footer-true {
 	border-top-color: #bdffbd;
+}
+
+
+nav {
+	display: block;
+	width: 100%;
+	border-bottom: 1px solid $gray1;
+	background-color: $gray3;
+	text-align: center;
+
+	& .nav-menu{
+		width: 33.3%;
+		display: inline-block;
+		background-color: $gray4;
+		padding: 20px;
+		@include border-box;
+	}
+}
+#push-conteudo {
+	display: block;
+	margin: auto;
+	max-width: 980px;
+	padding: 20px;
+	@include border-box;
+	background-color: $gray4;
 }

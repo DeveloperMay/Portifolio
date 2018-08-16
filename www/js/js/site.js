@@ -1,4 +1,4 @@
-window.MS = {
+window.tt = {
 
 
 	delay: function (fn, tm) {

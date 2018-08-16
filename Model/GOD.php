@@ -67,11 +67,11 @@ class Model_God extends Model_Functions_Functions{
 		if(is_array($bigodim) and $bigodim !== null and $bigodim !== ''){
 
 			@$var = $this->comprimeHTML(str_replace(array_keys($bigodim), array_values($bigodim), $this->_eye->visao())); 
-			return $var;
+			return json_encode($var);
 
 		}else{
 
-			return $this->comprimeHTML(str_replace('{{visao}}', $bigodim, $this->_eye->visao()));
+			return json_encode($this->comprimeHTML(str_replace('{{visao}}', $bigodim, $this->_eye->visao())));
 		}
 	}
 
