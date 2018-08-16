@@ -1,162 +1,140 @@
-window.tt = {
+window.older = false;
+window.n = 0;
+window.scl = 0;
 
+function getXHRPopStateShowStatus(){
+	return XHRPopStateShowStatus;
+}
 
-	delay: function (fn, tm) {
-		window.setTimeout(function () {
-			fn();
-		}, tm);
-	},
-	delayPersistent: (function(fn, ms){
-		var timer = 0;
-		return function(fn, ms){
-			clearTimeout(timer);
-			timer = setTimeout(fn, ms);
-		};
-	}())
-};
+function setXHRPopStateShowStatus(st){
+	XHRPopStateShowStatus = st;
+}
 
-window.Render = {
+/* PUSH HISTORY AJAX */
+var xhrfn = function(controler, doneCallFn){
 
-	trimString: function(s){
+	var expPopstate = /!popstate+$/g;
+	var expHash = /#[.*\S]+$/g;
+	var expHashExtract = /#([.*\S]+)$/i;
+	var atualLocation = XHRPopLastController.replace(expHash, '');
 
-		var l = 0, r= s.length -1;
-		while(l < s.length && s[l] == ' '){
+	controler = controler.replace(expPopstate, '');
+	var testHash = controler;
 
-			l++;
-		}
+	controler = controler.replace(expHash, '');
 
-		while(r > l && s[r] == ' '){
+	if(atualLocation != controler){
 
-			r-=1;
-		}
-
-		return s.substring(l, r+1);
-	},
-	compareObjects: function(o1, o2){
-
-		var k = '';
-		for(k in o1){
-
-			if(o1[k] != o2[k]){
-
-				return false;
-			}
-		}
-
-		for(k in o2){
-
-			if(o1[k] != o2[k]){
-
-				return false;
-			}
-		}
-
-		return true;
-	},
-	itemExists: function(haystack, needle){
-
-		for(var i = 0; i < haystack.length; i++){
-
-			if(this.compareObjects(haystack[i], needle)){
-
-				return true;
-			}
-		}
-
-		return false;
-	},
-	procura: function(arr, s){
-		var matches = [], i, key;
-
-		for(i = arr.length; i--;){
-
-			for( key in arr[i]){
-
-				if(arr[i].hasOwnProperty(key) && arr[i][key].indexOf(s) > -1){
-
-					matches.push(arr[i]);
+		if(XHRPopState){
+			if(typeof(XHRPopState.abort) === 'function'){
+				if(getXHRPopStateShowStatus() === false){
+					console.warn('Cancelando request anterior.');
 				}
+				setXHRPopStateShowStatus(false);
+				XHRPopState.abort();
 			}
 		}
 
-		return matches;
-	},
-	execute: function(result, renderTo, mascara, maskFirst, maskLast = '', maskEmpty = '', limit = 15){
+		setXHRPopStateShowStatus(false);
 
-		if(result.length !== 0){
+		XHRPopState = DW.ajax({
+			'url': controler,
+			'data': {push: 'push'},
+			'dataType': 'json',
+			'done': function(rtn){
 
-			var html = maskFirst;
-			if(limit >= 1){
+				XHRPopLastController = controler;
 
-				var limitPadrao = 1;
+				setXHRPopStateShowStatus(true);
 
-				for (var cols in result){
+				doneCallFn();
 
-					var mask = mascara;
-
-					for (var i in result[cols]){
-
-						mask = mask.split('{{'+i+'}}').join(result[cols][i]);
-					}
-
-					mask = mask.split('{{key}}').join((indice - 1));
-
-					if(limitPadrao <= limit){
-						total = limitPadrao;
-						html += mask;
-						limitPadrao = limitPadrao + 1;
-					}
-					
+				if(rtn.title){
+					document.title = rtn.title;
 				}
 
-			}else{
-
-				var indice = '';
-				for (var cols in result){
-
-					var mask = mascara;
-
-					for (var ind in result[cols]){
-
-						mask = mask.split('{{'+ind+'}}').join(result[cols][ind]);
-					}
-
-					html += mask;
+				if(rtn.jsFilters){
+					Buscar.filtrar(rtn.jsFilters);
 				}
-			}
 
-			if(total <= 9){
-				total = '0'+total;
-			}
-			html = html.replace('{{total_resultados}}', total)+maskLast;
-					
-			return renderTo.html(html);
+				var render = DW.getById('push-conteudo');
+				render.innerHTML = '';
+				render.innerHTML = rtn;
 
-		}else{
-
-			return renderTo.html(maskEmpty);
-		}
-	},
-	searchFor: function(toSearch, objeto){
-
-		var results = [];
-		
-		toSearch = this.trimString(toSearch);
-
-		for(var i = 0; i < objeto.length; i++){
-
-			for(var key in objeto[i]){
-
-				if(objeto[i][key].indexOf(toSearch) != -1){
-
-					if(!this.itemExists(results, objeto[i])){
-
-						results.push(objeto[i]);
+				if(typeof(ga) !== 'undefined'){
+					if(controler === jsdominio){
+						gtag('config', 'UA-114219722-1', {'page_path': '/'});
+					}else{
+						var gasend = controler.replace(jsdominio, '');
+						gasend = gasend.replace('!popstate', '');
+						gtag('config', 'UA-114219722-1', {'page_path': gasend});
 					}
 				}
-			}
-		}
 
-		return results;
+				DW.delay(function(){
+
+					// SCROLL TO HASH ELEMENT
+					if(expHashExtract.test(testHash) === true){
+						var idByHash = testHash.match(expHashExtract)[1];
+						if(DW.getById(idByHash)){
+							var idByHashTop = DW.positionAtTop(DW.getById(idByHash));
+							window.scrollTo(0, idByHashTop);
+						}else{
+							window.scrollTo(0, XHRPopStateScroll[testHash]);
+						}
+					}else{
+
+						if(XHRPopStateScroll[controler]){
+							window.scrollTo(0, XHRPopStateScroll[controler]);
+						}else{
+							window.scrollTo(0, 0);
+						}
+					}
+
+				}, 30);
+
+				/* index */
+				if(controler === '/' || controler === jsdominio || controler === jsdominio+'/'){
+
+				/* outros */
+				}else{
+				}
+			},
+			'error': function(evts){
+				if(getXHRPopStateShowStatus() === true){
+				/*	DW.warning({'message': 'Não foi possível acessar o conteúdo requisitado, há algum problema com a Internet!'});
+*/
+				}
+			}
+		});
 	}
 };
+
+var lockChangePageFn = function(url){
+		if(lockChangePage === true){
+			DW.confirm({
+				message: lockExitMessage,
+				'ok': 'Não sair',
+				'no': 'Sair',
+				'okFunction': function(){
+				},
+				'noFunction': function(){
+					lockChangePage = false;
+					lockClosePage = false;
+					DW.pushstate.goXHR(url, xhrfn, '');
+				}
+			});
+		}
+	};
+
+if(navigator.userAgent.match(/MSIE 9\.0/)){
+	older = true;
+}
+
+if(older === false){
+	DW.pushstate.init({
+		'lockExitMessage': lockExitMessage,
+		'xhrfn': xhrfn,
+		'lockChangePageFn': lockChangePageFn
+	});
+}

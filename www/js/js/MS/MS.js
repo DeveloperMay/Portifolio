@@ -1,91 +1,78 @@
-/* VAR TO LOCK CHANGE PAGE */
-var lockChangePage = false;
+window.DW = {
+	delay: function (fn, tm) {
+		window.setTimeout(function () {
+			fn();
+		}, tm);
+	},
+	confirm: function(obj){
+		if(obj.message && obj.ok){
+			
+			var mask = '<div class="DW-confirm"><p class="text-center strong">'+obj.message+'</p><hr /><p class="text-center"><button id="DW-confirm-ok" class="btn btn-site">'+obj.ok+'</button></p></div>';
 
-/* VAR TO LOOK EXIT PAGE, CLOSE BROWSER OR CLOSE TAB */
-var lockClosePage = false;
+			if(obj.no !== false){
+				var mask = '<div class="DW-confirm"><p class="text-center strong">'+obj.message+'</p><hr /><p class="text-center"><button id="DW-confirm-ok" class="btn btn-site">'+obj.ok+'</button> <button id="DW-confirm-no" class="btn btn-danger">'+obj.no+'</button></p></div>';
+			}
 
-var touchEvents = false;
+			if(DW.getById('DW-confirm')){
+				var div = DW.getById('DW-confirm');
+				div.innerHTML = mask;
+			}else{
+				var div = document.createElement('div');
+				div.setAttribute('id', 'DW-confirm');
+				div.innerHTML = mask;
+				document.body.appendChild(div);
+			}
 
-/* EVENTOS DE ESCUTA APENAS UMA VEZ */
-var fakescroll;
-var fakeresize;
+			div.classList.remove('hidden');
 
-if(Event in window){
-	fakescroll = new Event('fakescroll');
-	fakeresize = new Event('fakeresize');
-}else if(document.createEvent){
+			if(DW.getById('DW-confirm-ok')){
+				DW.getById('DW-confirm-ok').focus();
+			}
 
-	fakescroll = document.createEvent('Event');
-	fakescroll.initEvent('fakescroll', true, false);
+			DW.evts.add('click', div, function(evts){
+				if(div === DW.targt(evts)){
+					div.classList.add('hidden');
 
-	fakeresize = document.createEvent('Event');
-	fakeresize.initEvent('fakeresize', true, false);
-}
-window.MS = {
-	/* ADD EVENTS */
-	evts: {
-		add: function (evt, el, fn) {
-			if(el !== null){
-				if(window.addEventListener){
-					el.addEventListener(evt, function(evt){
-						fn(evt);
-					}, true);
-				}else{
-					el.attachEvent("on"+evt, function(){
-						fn(evt);
-					});
+					/* AJUSTAR ISTO */
+					if(obj.okFunction){
+						obj.okFunction();
+					}
 				}
+			});
+
+			DW.evts.add('click', DW.getById('DW-confirm-ok'), function(evts){
+				div.classList.add('hidden');
+
+				if(obj.okFunction){
+					obj.okFunction();
+				}
+			});
+
+			DW.evts.add('keyup', DW.getById('DW-confirm-ok'), function(evts){
+
+				if(evts.keyCode == 13){
+					div.classList.add('hidden');
+
+					if(obj.okFunction){
+						obj.okFunction();
+					}
+				}
+			});
+
+			if(obj.noFunction){
+				DW.evts.add('click', DW.getById('DW-confirm-no'), function(evts){
+					div.classList.add('hidden');
+					obj.noFunction();
+				});
 			}
-		}
-	},
-	screensizes: function(){
 
-		var orient;
-
-		if(window.screen.mozOrientation){
-			orient = window.screen.mozOrientation;
-		}else if(window.screen.msOrientation){
-			orient = window.screen.msOrientation
-		}else if(window.screen.orientation){
-			if(window.screen.orientation.type){
-				orient = window.screen.orientation.type;
-			}else{
-				orient = window.screen.orientation;
-			}
-		}else{
-			if(window.screen.height > window.screen.width){
-				orient = 'portrait-primary';
-			}else{
-				orient = 'landscape-primary';
-			}
+			DW.evts.add('keyup', DW.getById('DW-confirm-no'), function(evts){
+				if(evts.keyCode == 13){
+					div.classList.add('hidden');
+					obj.noFunction();
+				}
+			});
 		}
-
-		return {
-			'viewWidth': window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-			'viewHeight': window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
-			'pageWidth': document.body.clientWidth || document.body.offsetWidth,
-			'pageHeight': document.body.clientHeight || document.body.offsetHeight,
-			'resolutionWidth': window.screen.width,
-			'resolutionHeight': window.screen.height,
-			'orientation': orient,
-			'colorDepth': window.screen.colorDepth,
-			'pixelDepth': window.screen.pixelDepth
-		}
-
-	},
-	trigger: function (ev, el){
-		if(document.createEvent){
-			evento = document.createEvent('HTMLEvents');
-			evento.initEvent(ev, true, true);
-			el.dispatchEvent(evento);
-		}else{
-			evento = document.createEventObject();
-			el.fireEvent('on'+ev, evento);
-		}
-	},
-	targt: function (e) {
-		e = e.target ? e : window.event;
-		return e.target || e.srcElement;
 	},
 	pushstate: {
 		init: function(configObj){
@@ -109,39 +96,40 @@ window.MS = {
 			}
 
 			/* POPSTATE EVENT */
-			MS.evts.add('popstate', window, function(evts){
+			DW.evts.add('popstate', window, function(evts){
 
 				if(lockChangePage === true){
-					lockChangePageFn(evts.location.href);
+					lockChangePageFn(window.location.href);
 					return false;
 				}
 
 				var host = window.location.protocol+'//'+window.location.host;
-				var controler = evts.location.href.replace(host, '');
-
-				xhrfn(controler, function(){});
+				var controler = window.location.href.replace(host, '')+'!popstate';
+				xhrfn(controler, function(){
+					alert('oi');
+				});
 
 			});
 
 			/* CLICK EVENTS */
-			MS.evts.add('click', document, function(evts){
+			DW.evts.add('click', document, function(evts){
 
-				var elemt = evts.target;
+				var elemt = DW.targt(evts);
 
 				var expJs = new RegExp('javascript:', 'i');
 				var expFTP = new RegExp('ftp:', 'i');
 				var expMail = new RegExp('mailto:', 'i');
 				var expWhatsapp = new RegExp('whatsapp:', 'i');
 
-				var domain = jsdominio;
+				var domain = window.location.hostname;
 
-				if(elemt.nodeName !== 'BUTTON' && elemt.parentElement !== null && elemt.parentElement.nodeName === 'BUTTON'){
+				if(elemt.parentElement !== null && elemt.nodeName !== 'BUTTON' && elemt.parentElement.nodeName === 'BUTTON'){
 					elemt = elemt.parentElement;
 				}
 
-				if(elemt.nodeName === 'BUTTON' && elemt.getAttribute('data-push') && elemt.getAttribute('data-push') !== false){
+				if(elemt.nodeName === 'BUTTON' && elemt.getAttribute('data-href') && elemt.getAttribute('data-href') !== false){
 
-					var hrefDomain = elemt.getAttribute('data-push').replace('http://', '');
+					var hrefDomain = elemt.getAttribute('data-href').replace('http://', '');
 					hrefDomain = hrefDomain.replace('https://', '');
 
 					var re = new RegExp('^\/', 'i'); 
@@ -153,11 +141,11 @@ window.MS = {
 					var urlIn = new RegExp('^'+domain, 'i');
 
 					if(urlIn.test(hrefDomain) === true){
-						MS.pushstate.goXHR(elemt.getAttribute('data-push'), xhrfn, lockChangePageFn);
+						DW.pushstate.goXHR(elemt.getAttribute('data-href'), xhrfn, lockChangePageFn);
 					}else{
 						var a = document.createElement('a');
-						a.href = elemt.getAttribute('data-push');
-						MS.trigger('click', a);
+						a.href = elemt.getAttribute('data-href');
+						DW.trigger('click', a);
 					}
 				}else{
 
@@ -176,7 +164,7 @@ window.MS = {
 
 								var urlIn = new RegExp('^'+domain, 'i');
 
-								if(urlIn.test(hrefDomain) === true && !elemt.getAttribute('data-push')){
+								if(urlIn.test(hrefDomain) === true && !elemt.getAttribute('data-href')){
 
 									/* GOXHR*/
 									if(expJs.test(elemt.href) === false || 
@@ -191,7 +179,7 @@ window.MS = {
 										if(evts.preventDefault){
 											evts.preventDefault();
 										}
-										xhrfn(elemt.href, xhrfn, lockChangePageFn);
+										DW.pushstate.goXHR(elemt.href, xhrfn, lockChangePageFn);
 									}
 
 								}
@@ -202,7 +190,7 @@ window.MS = {
 			});
 
 			/* beforeunload EVENT  */
-			window.addEventListener('beforeunload', window, function(evts){
+			DW.evts.add('beforeunload', window, function(evts){
 				if(lockClosePage === true){
 
 					evts.cancelBubble = true;
@@ -223,7 +211,7 @@ window.MS = {
 		},
 		goXHR: function(controler, xhrfn, lockChangePageFn){
 
-			if(lockChangePage === true && lockChangePageFn){
+			if(lockChangePage === true){
 				lockChangePageFn(controler);
 				return false;
 			}
@@ -234,24 +222,42 @@ window.MS = {
 			XHRPopStateScroll[ctrlpage] = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
 
 			xhrfn(controler, function(){
-				history.pushState({}, '', controler);
+				history.pushState({atual: controler}, '', controler);
 			});
 
 		}
 	},
-	positionAtTop: function(el){
-		posicao = 0;
-		if(el.offsetParent){
-			do{
-				posicao += el.offsetTop;
-			} while (el = el.offsetParent);
+	evts: {
+		add: function (evt, el, fn) {
+			if(el !== null){
+				if(window.addEventListener){
+					el.addEventListener(evt, function(evt){
+						fn(evt);
+					}, true);
+				}else{
+					el.attachEvent("on"+evt, function(){
+						fn(evt);
+					});
+				}
+			}
 		}
-		return posicao;
 	},
-	delay: function (fn, tm) {
-		window.setTimeout(function () {
-			fn();
-		}, tm);
+	trigger: function (ev, el){
+		if(document.createEvent){
+			evento = document.createEvent('HTMLEvents');
+			evento.initEvent(ev, true, true);
+			el.dispatchEvent(evento);
+		}else{
+			evento = document.createEventObject();
+			el.fireEvent('on'+ev, evento);
+		}
+	},
+	getById: function(element){
+		return document.getElementById(element);
+	},
+	targt: function (e) {
+		e = e.target ? e : window.event;
+		return e.target || e.srcElement;
 	},
 	ajax: function (options) {
 		var XHR;
@@ -261,7 +267,7 @@ window.MS = {
 		if(window.XMLHttpRequest){
 			XHR = new XMLHttpRequest();
 		}else if(window.ActiveXObject){
-			XHR = new ActiveXObject('Msxml2.XMLHTTP');
+			XHR = new ActiveXObject('DWxml2.XMLHTTP');
 			if(!XHR){
 				XHR = new ActiveXObject('Microsoft.XMLHTTP');
 			}
@@ -296,7 +302,7 @@ window.MS = {
 		/* AS FORM */
 		}else if(options.formId){
 
-			var form = document.getElementById(options.formId);
+			var form = DW.getById(options.formId);
 			var frm = new FormData();
 
 			var inputs = form.getElementsByTagName('input');
@@ -350,6 +356,7 @@ window.MS = {
 			XHR.send(frm);
 
 		}
+
 		XHR.onreadystatechange = function(){
 
 			if(XHR.readyState === 4 && (XHR.status === 200 || XHR.status === 304)){
@@ -387,4 +394,4 @@ window.MS = {
 
 		return XHR;
 	}
-};
+};	

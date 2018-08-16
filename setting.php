@@ -19,7 +19,7 @@ define('DEV', false);
 /**
 ** CONFIGURAÇÕES DO MVC
 **/
-define('DIR', '/home/dev/Portifolio/Portifolio/');
+define('DIR', '../');
 
 define('SAVE_SESSIONS', 'Sessions');
 

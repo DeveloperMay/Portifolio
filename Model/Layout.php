@@ -142,7 +142,22 @@ class Model_Layout {
 <link rel="shortcut icon" href="/img/site/caveira.png" type="image/x-icon">
 <link rel="icon" href="/img/site/caveira.png" type="image/x-icon">
 <script src="/js/MS.min.js{{cache}}"></script>
-		
+<script>
+	window.lastWidth = 0;
+	var imoveislist = {};
+	var lockClosePage = true;
+
+	/* lockChangePage é padrão false, quando alterar algum formulário troque o valor da variavel a true então vai bloquear a troca de tela*/
+	var lockChangePage = false;
+	var jsdominio = 'portifolio.local';
+	var lockExitMessage = 'Algumas informações ainda não foram salvas. Deseja sair sem salvar estas alterações?';
+	var XHRPopState;
+	var XHRPopLastController = '/';
+	var XHRPopStateScroll = {};
+	var XHRPopStateShowStatus = true;
+</script>
+<script src="/js/site.min.js{{cache}}"></script>
+
 php;
 
 		return $header;
