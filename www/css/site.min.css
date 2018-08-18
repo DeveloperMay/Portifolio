@@ -147,4 +147,24 @@ nav {
   -o-box-sizing: border-box;
   background-color: #e6e6e6; }
 
+[data-anima] {
+  opacity: 0;
+  transition: .3s; }
+
+[data-anima="left"] {
+  transform: translate3d(-50px, 0, 0); }
+
+[data-anima="right"] {
+  transform: translate3d(50px, 0, 0); }
+
+[data-anima="top"] {
+  transform: translate3d(0, -50px, 0); }
+
+[data-anima="bottom"] {
+  transform: translate3d(0, 50px, 0); }
+
+[data-anima].animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0); }
+
 /*# sourceMappingURL=map/site.min.css.map */

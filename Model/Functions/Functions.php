@@ -3,30 +3,11 @@
 	"AUTHOR":"Matheus Mayana",
 	"CREATED_DATA": "14/08/2018",
 	"MODEL": "Functions",
-	"LAST EDIT": "14/08/2018",
-	"VERSION":"0.0.1"
+	"LAST EDIT": "18/08/2018",
+	"VERSION":"0.0.2"
 */
 
 class Model_Functions_Functions {
-
-	public $_conexao;
-
-	public $_consulta;
-
-	function __construct(){
-
-		$this->_conexao = new Model_Bancodados_Conexao;
-
-		$this->_consulta = new Model_Bancodados_Consultas($this->_conexao);
-	}
-
-	function __destruct(){
-
-		$this->_conexao = null;
-
-		$this->_consulta = null;
-
-	}
 
 	/* GERA TOKEN DE SEGURAÇA NOS FORMULÁRIO */
 	function _TokenForm($formulario){

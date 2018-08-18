@@ -4,8 +4,8 @@
 	"AUTHOR":"MVC_Maydana",
 	"CREATED_DATA": "09/04/2018",
 	"NUCLEO": "MVC_Maydana",
-	"LAST EDIT": "07/06/2018",
-	"VERSION":"0.0.3"
+	"LAST EDIT": "18/08/2018",
+	"VERSION":"0.0.4"
 }
 */
 
@@ -21,6 +21,14 @@ class MVC_Maydana {
 	protected $url 		  = array();
 	protected $conexao;
 
+	/* Linguas que o site suporta */
+	public $langs = array(
+		'br' => '',
+		'en' => 'en'
+	);
+
+	public $lang = '';
+
 	function __construct(){
 
 		// COLOCAR A URL EM UM ARRAY PARA TER CONTROLE MVC
@@ -30,7 +38,22 @@ class MVC_Maydana {
 			$this->url = $url;
 		}
 
-		if(empty($url[1])){
+		foreach ($this->langs as $lang => $null){
+
+			if(isset($this->url[1]) and $this->url[1] === $lang){
+				// Remove 'Ignora' o langs (br, en, etc..)
+				unset($this->url[1]);
+
+				// Salva o leng atual, exp br
+				$this->lang = $lang;
+				$novaURL = implode('/', $this->url);
+				$novaURL = explode('/', $novaURL);
+
+				// AQUI, ignora a lang e remonta a url USAR ESSA PORRA, pro mvc funfa
+				$this->url = $novaURL;
+			}
+		}
+		if(empty($this->url[1])){
 
 			// SE NÃO HOUVER NADA NA URL, EXIBE O CONTROLADOR/VISÃO INDEX
 			$this->controller = 'index';
@@ -54,17 +77,17 @@ class MVC_Maydana {
 		}else{
 
 			// EXISTE ALGO NA URL, VERIFICAR SE OQUE TEM NA URL EXISTE UM CONTROLADOR
-			if(file_exists(DIR.'Controller/'.$url[1].'/'.$url[1].EXTENSAO_CONTROLADOR)){
+			if(file_exists(DIR.'Controller/'.$this->url[1].'/'.$this->url[1].EXTENSAO_CONTROLADOR)){
 
 				// MONTA O CONTROLADOR E ACTION (SE TIVER NA URL)
-				$this->controller = $url[1];
-				$this->visao 	  = $url[1];
+				$this->controller = $this->url[1];
+				$this->visao 	  = $this->url[1];
 
 				try{
 
-					if(file_exists(DIR.'Controller/'.$url[1].'/'.$url[1].EXTENSAO_CONTROLADOR)){
+					if(file_exists(DIR.'Controller/'.$this->url[1].'/'.$this->url[1].EXTENSAO_CONTROLADOR)){
 
-						require_once (DIR.'Controller/'.$url[1].'/'.$url[1].EXTENSAO_CONTROLADOR);
+						require_once (DIR.'Controller/'.$this->url[1].'/'.$this->url[1].EXTENSAO_CONTROLADOR);
 		
 					}else{
 
@@ -82,9 +105,9 @@ class MVC_Maydana {
 				$controlador = new $this->controller;
 
 				// VERIFICA SE EXISTE A ACTION NO CONTROLADOR,
-				if(isset($url[2]) and !empty($url[2])){
+				if(isset($this->url[2]) and !empty($this->url[2])){
 
-					$action = str_replace('-', '', $url[2]);
+					$action = str_replace('-', '', $this->url[2]);
 
 					if(method_exists($controlador, $action)){
 
@@ -125,7 +148,7 @@ class MVC_Maydana {
 
 		$erro404->index();
 	}
-	
+
 	// "QUEBRA" O URL PARA DEFINIR OQUE É CONTROLADOR, ACTION..
 	private function parseUrl($url){
 

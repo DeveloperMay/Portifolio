@@ -4,8 +4,8 @@
 	"AUTHOR":"Matheus Maydana",
 	"CREATED_DATA": "14/08/2018",
 	"MODEL": "View",
-	"LAST EDIT": "14/08/2018",
-	"VERSION":"0.0.1"
+	"LAST EDIT": "18/08/2018",
+	"VERSION":"0.0.2"
 }
 */
 
@@ -17,9 +17,15 @@
 
 class Model_View {
 
-	function __construct($st_view = null, $v_params = null, $st_controlador = null){
+	private $_lang = 'br';
 
-		try{
+	function __construct($lang = false){
+
+		if($lang !== ''){
+			$this->_lang = $lang;
+		}
+
+		/*try{
 
 			if($st_view !== null and $controlador !== null ){
 
@@ -33,7 +39,7 @@ class Model_View {
 			/**
 			** ALGO DE MUITO ERRADO ACONTECEU
 			**/
-		}
+		//}
 
 	}
 
@@ -41,7 +47,7 @@ class Model_View {
 
 		try{
 
-			if(file_exists(DIR.'/View/'.$controlador.'/'.$st_view.EXTENSAO_VISAO)){
+			if(file_exists(DIR.'View'.$this->_lang.'/'.$controlador.'/'.$st_view.EXTENSAO_VISAO)){
 
 				$this->st_view = $st_view;
 				$this->st_controlador = $controlador;
@@ -80,11 +86,11 @@ class Model_View {
 				$visao = $this->st_view;
 				$controlador = $this->st_controlador;
 
-				if(file_exists(DIR.'View/'.$controlador.'/'.$visao.EXTENSAO_VISAO)){
+				if(file_exists(DIR.'View'.$this->_lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO)){
 
 				$mustache = array();
 
-				$visao = str_replace(array_keys($mustache), array_values($mustache), file_get_contents(DIR.'View/'.$controlador.'/'.$visao.EXTENSAO_VISAO));
+				$visao = str_replace(array_keys($mustache), array_values($mustache), file_get_contents(DIR.'View'.$this->_lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO));
 
 					return $visao;
 

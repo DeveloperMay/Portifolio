@@ -4,8 +4,8 @@
 	"AUTHOR":"Matheus Maydana",
 	"CREATED_DATA": "14/08/2018",
 	"MODEL": "Layout",
-	"LAST EDIT": "14/08/2018",
-	"VERSION":"0.0.1"
+	"LAST EDIT": "18/08/2018",
+	"VERSION":"0.0.2"
 }
 */
 
@@ -157,7 +157,7 @@ class Model_Layout {
 	var XHRPopStateShowStatus = true;
 </script>
 <script src="/js/site.min.js{{cache}}"></script>
-
+		
 php;
 
 		return $header;

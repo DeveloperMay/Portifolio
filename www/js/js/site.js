@@ -53,23 +53,9 @@ var xhrfn = function(controler, doneCallFn){
 					document.title = rtn.title;
 				}
 
-				if(rtn.jsFilters){
-					Buscar.filtrar(rtn.jsFilters);
-				}
-
 				var render = DW.getById('push-conteudo');
 				render.innerHTML = '';
 				render.innerHTML = rtn;
-
-				if(typeof(ga) !== 'undefined'){
-					if(controler === jsdominio){
-						gtag('config', 'UA-114219722-1', {'page_path': '/'});
-					}else{
-						var gasend = controler.replace(jsdominio, '');
-						gasend = gasend.replace('!popstate', '');
-						gtag('config', 'UA-114219722-1', {'page_path': gasend});
-					}
-				}
 
 				DW.delay(function(){
 
