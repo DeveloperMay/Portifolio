@@ -37,6 +37,11 @@ define('DIRETORIO_PROJETO', DIR);		// diretório
 ** CONFIGURAÇÕES
 **/
 
+define('LANGS', array(
+		'br' => '',
+		'en' => 'en'
+	)
+);
 /**
 ** BANCO DADOS
 ** @param pgsql ou mysql

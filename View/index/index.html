@@ -208,13 +208,14 @@
 	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </p>
 <script>
-const target = document.querySelectorAll('[data-anima]');
-const animationClass = 'animate';
+window.box_anima = document.querySelectorAll('[data-anima]');
+
+window.animationClass = 'animate';
 
 window.animaScroll = function(){
 	const windowTop = window.scrollY + ((window.innerHeight * 3.5) / 4);
 
-	target.forEach(function(elemento){
+	box_anima.forEach(function(elemento){
 
 		if((windowTop) > elemento.offsetTop){
 			elemento.classList.add(animationClass);
@@ -224,10 +225,13 @@ window.animaScroll = function(){
 	});
 };
 
-if(target.length){
+if(box_anima.length){
+
+
 	DW.evts.add('scroll', window, DW.debounce(function(){
-		animaScroll();
-		}, 50)
+
+			animaScroll();
+		}, 350)
 	);
 }
 (function(){

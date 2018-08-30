@@ -16,30 +16,9 @@
 **
 **/
 
-class Model_Layout {
+class Model_Layout extends Model_View{
 
-	public $_url;
-
-	public $_conexao;
-
-	public $_consulta;
-
-	function __construct($conexao, $st_view = null, $v_params = null){
-
-		$this->_conexao = $conexao;
-
-		$this->_consulta = new Model_Bancodados_Consultas($conexao);
-
-		$this->_url 	= new Model_Pluggs_Url;
-
-		if($st_view !== null){
-
-			$this->setView($st_view);
-			$this->v_params = $v_params;
-		}
-	}
-
-	public function setView($st_view){
+	public function setLayout($st_view){
 
 		try{
 
@@ -74,28 +53,25 @@ class Model_Layout {
 
 		try{
 
-			if(isset($this->st_view)){
+			$layout = LAYOUT;
 
-				$layout = $this->st_view;
+			/* COLOCAR CACHE NOS ARQUIVOS STATICOS QUANDO NÃO ESTÁ EM PRODUÇÃO */
+			$cache = '';
+			$random = mt_rand(10000, 99999);
 
-				/* COLOCAR CACHE NOS ARQUIVOS STATICOS QUANDO NÃO ESTÁ EM PRODUÇÃO */
-				$cache = '';
-				$random = mt_rand(10000, 99999);
-
-				if(DEV !== true){
-					$cache = '?cache='.$random;
-				}
-
-				$mustache = array(
-					'{{static}}' 		=> URL_STATIC,
-					'{{header}}' 		=> $this->_headerHTML(),
-					'{{cache}}' 		=> $cache,
-				);
-
-				$layout = str_replace(array_keys($mustache), array_values($mustache), file_get_contents(DIR.'Layout/'.$layout.EXTENSAO_VISAO));
-				return $layout;
-				
+			if(DEV !== true){
+				$cache = '?cache='.$random;
 			}
+
+			$mustache = array(
+				'{{static}}' 		=> URL_STATIC,
+				'{{header}}' 		=> $this->_headerHTML(),
+				'{{cache}}' 		=> $cache,
+				'{{lang}}'			=> $this->_url
+			);
+
+			$layout = str_replace(array_keys($mustache), array_values($mustache), file_get_contents(DIR.'Layout/'.$layout.EXTENSAO_VISAO));
+			return $layout;
 
 		}catch(PDOException $e){
 
@@ -113,7 +89,7 @@ class Model_Layout {
 
 	private function _headerHTML(){
 
-		$url = $this->_url->url();
+		$url = $this->url;
 		
 		$noscript = '<noscript><meta  http-equiv="refresh"  content="1; URL=/noscript"  /></noscript>';
 		if(isset($url[1]) and $url[1] == 'noscript'){

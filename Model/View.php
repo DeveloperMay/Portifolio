@@ -15,39 +15,13 @@
 **
 **/
 
-class Model_View {
-
-	private $_lang = 'br';
-
-	function __construct($lang = false){
-
-		if($lang !== ''){
-			$this->_lang = $lang;
-		}
-
-		/*try{
-
-			if($st_view !== null and $controlador !== null ){
-
-				$this->setView($st_view);
-				$this->v_params = $v_params;
-				$this->st_controlador = $controlador;
-			}
-			
-		}catch(PDOException $e){
-
-			/**
-			** ALGO DE MUITO ERRADO ACONTECEU
-			**/
-		//}
-
-	}
+class Model_View extends Model_Functions_Functions{
 
 	public function setView($controlador, $st_view){
 
 		try{
 
-			if(file_exists(DIR.'View'.$this->_lang.'/'.$controlador.'/'.$st_view.EXTENSAO_VISAO)){
+			if(file_exists(DIR.'View'.$this->lang.'/'.$controlador.'/'.$st_view.EXTENSAO_VISAO)){
 
 				$this->st_view = $st_view;
 				$this->st_controlador = $controlador;
@@ -86,11 +60,11 @@ class Model_View {
 				$visao = $this->st_view;
 				$controlador = $this->st_controlador;
 
-				if(file_exists(DIR.'View'.$this->_lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO)){
+				if(file_exists(DIR.'View'.$this->lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO)){
 
 				$mustache = array();
 
-				$visao = str_replace(array_keys($mustache), array_values($mustache), file_get_contents(DIR.'View'.$this->_lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO));
+				$visao = str_replace(array_keys($mustache), array_values($mustache), file_get_contents(DIR.'View'.$this->lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO));
 
 					return $visao;
 

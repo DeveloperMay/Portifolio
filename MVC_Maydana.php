@@ -21,12 +21,6 @@ class MVC_Maydana {
 	protected $url 		  = array();
 	protected $conexao;
 
-	/* Linguas que o site suporta */
-	public $langs = array(
-		'br' => '',
-		'en' => 'en'
-	);
-
 	public $lang = '';
 
 	function __construct(){
@@ -38,7 +32,7 @@ class MVC_Maydana {
 			$this->url = $url;
 		}
 
-		foreach ($this->langs as $lang => $null){
+		foreach (LANGS as $lang => $null){
 
 			if(isset($this->url[1]) and $this->url[1] === $lang){
 				// Remove 'Ignora' o langs (br, en, etc..)
@@ -53,6 +47,7 @@ class MVC_Maydana {
 				$this->url = $novaURL;
 			}
 		}
+
 		if(empty($this->url[1])){
 
 			// SE NÃO HOUVER NADA NA URL, EXIBE O CONTROLADOR/VISÃO INDEX

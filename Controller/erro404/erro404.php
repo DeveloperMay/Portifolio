@@ -29,6 +29,7 @@ class Erro404 {
 
 		if($this->_push === false){
 
+			header("HTTP/1.0 404 Not Found");
 			echo $this->_cor->_visao($this->_cor->_layout('erro404', 'erro404'), $mustache);
 
 		}else{
