@@ -5,15 +5,67 @@
 		<header>
 		</header>
 		<nav>
+			<div class="nv-box">
+				<div class="header-box">
+					<div class="header-a">Matheus Maydana - Desenvolvedor web</div>
+					<div class="header-b">
+						<button class="btn-net width-25">
+							<i class="icb ic-facebook-f"></i>
+						</button>
+						<button class="btn-net width-25">
+							<i class="icb ic-instagram"></i> 
+						</button>
+						<button class="btn-net width-25">
+							<i class="icb ic-twitter"></i>
+						</button>
+						<button class="btn-net width-25">
+							<i class="icb ic-twitch"></i>
+						</button>
+					</div>
+				</div>
+			</div>
 			<div class="nav-box">
-				<a href="{{lang}}" class="nav-menu">Início</a>
-				<a href="{{lang}}algumacoisaquenaoexiste" class="nav-menu">Solt</a>
-				<a href="{{lang}}contato" class="nav-menu">Contato</a>
+				<a href="{{lang}}" class="nav-menu">INÍCIO</a>
+				<a href="{{lang}}algumacoisaquenaoexiste" class="nav-menu">SOLT</a>
+				<a href="{{lang}}contato" class="nav-menu">CONTATO</a>
 			</div>
 		</nav>
 		<main id="push-conteudo">
 			{{visao}}
 		</main>
+		<footer class="footer">
+			<div class="foo-txt">
+				<p>2018 © Portifolio |  Todos os direitos reservados</p>
+			</div>
+		</footer>
 		<link rel="stylesheet" type="text/css" href="/css/site.min.css{{cache}}">
+		<link rel="stylesheet" type="text/css" href="/css/icons/all.min.css{{cache}}">
+		<script>
+
+	$(document).ready(function(){
+		var lastScrollTop = 0;
+
+		$(window).on('scroll', function(){
+
+			var st = $(this).scrollTop();
+			if(st > lastScrollTop){
+				
+				$('.nav-box').removeClass('nav-fix');
+			
+			}else{
+				
+				$('.nav-box').addClass('nav-fix');
+			}
+
+			if(st < 50){
+
+				$('.nav-box').removeClass('nav-fix');
+			}
+			
+			lastScrollTop = st;
+		});
+
+	});
+		</script>
 	</body>
 </html>
