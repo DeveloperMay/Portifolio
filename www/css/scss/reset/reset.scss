@@ -30,12 +30,17 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #eaeaea;
+	font-size: 14px;
 }
 ol, ul {
 	list-style: none;
 }
 blockquote, q {
 	quotes: none;
+}
+p{
+	line-height: 1.5em;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {

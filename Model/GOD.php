@@ -53,7 +53,6 @@ class Model_God extends Model_Layout{
 			$this->_conexao = $conexao;
 		}
 
-		//new de($this->lang);
 	}
 
 	// Retorna URL já ignorando o lang

@@ -37,18 +37,6 @@ class Model_Layout extends Model_View{
 		}
 	}
 
-	public function getView(){
-		return $this->st_view;
-	}
-
-	public function setParams(Array $v_params){
-		$this->v_params = $v_params; 
-	}
-
-	public function getParams(){
-		return $this->v_params;
-	}
-
 	public function Layout(){
 
 		try{
@@ -80,11 +68,6 @@ class Model_Layout extends Model_View{
 			** ERRO, ARQUIVO LAYOUT NÃO ENCONTRADO
 			**/
 		} 
-	}
-
-	public function showContents(){
-		echo $this->getContents();
-		exit;
 	}
 
 	private function _headerHTML(){

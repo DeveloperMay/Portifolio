@@ -39,18 +39,6 @@ class Model_View extends Model_Functions_Functions{
 		}
 	}
 
-	public function getView(){
-		return $this->st_view;
-	}
-
-	public function setParams(Array $v_params){
-		$this->v_params = $v_params; 
-	}
-
-	public function getParams(){
-		return $this->v_params;
-	}
-
 	function visao(){
 
 		try{
@@ -84,10 +72,5 @@ class Model_View extends Model_Functions_Functions{
 			** ERRO, ARQUIVO VISÃO NÃO ENCONTRADO
 			**/
 		}
-	}
-
-	public function showContents(){
-		echo $this->getContents();
-		exit;
 	}
 }
