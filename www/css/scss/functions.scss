@@ -45,7 +45,6 @@
 }
 
 @mixin no-select($valor: 'none') {
-
 	user-select: #{$valor};
 	-webkit-user-select: #{$valor};
 	-moz-user-select: #{$valor};
@@ -56,7 +55,6 @@
     opacity: #{$valor};
 }
 @mixin box-shadow($valor){
-
 	-webkit-box-shadow: #{$valor};
 	-moz-box-shadow: #{$valor};
 	box-shadow: #{$valor};
@@ -87,6 +85,19 @@
 	&:after {
 		clear: both;
 	}
+}
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+
+  @keyframes #{$name} {
+    @content;
+  }
 }
 
 @mixin hardware($backface: true, $perspective: 1000) {
@@ -223,5 +234,13 @@
 		$valor: $valor + 0.5rem;
 		$nome: $nome + 1;
 		$num: $num + 0.5;
+	}
+}
+@mixin selection($cor, $valor){
+	::-moz-selection {
+		background: lighten($cor, $valor);
+	}
+	::selection {
+		background: lighten($cor, $valor);
 	}
 }

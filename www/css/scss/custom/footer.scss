@@ -1,0 +1,16 @@
+.footer{
+	display: flex;
+	width: 100%;
+	padding: 40px;
+	margin: auto;
+	background-color: $colorSecondary;
+	margin-top: -50px;
+	min-height: 250px;
+	height: 30vh;
+	color: #ffffff;
+	@include border-box;
+
+	& .foo-txt{
+		margin: auto;
+	}
+}
