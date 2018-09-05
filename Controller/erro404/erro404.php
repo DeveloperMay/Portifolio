@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	{
 		"AUTHOR":"Matheus Maydana",
@@ -14,6 +14,8 @@ class Erro404 {
 
 	private $_push = false;
 
+	private $metas = array();
+
 	function __construct(){
 
 		$this->_cor = new Model_GOD;
@@ -27,14 +29,16 @@ class Erro404 {
 
 		$mustache = array();
 
+		$this->metas['title'] = 'DevWeb - Página não encontrada';
+
 		if($this->_push === false){
 
 			header("HTTP/1.0 404 Not Found");
-			echo $this->_cor->_visao($this->_cor->_layout('erro404', 'erro404'), $mustache);
+			echo $this->_cor->_visao($this->_cor->_layout('erro404', 'erro404', $this->metas), $mustache);
 
 		}else{
 
-			echo $this->_cor->push('erro404', 'erro404', $mustache);
+			echo $this->_cor->push('erro404', 'erro404', $mustache, $this->metas);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	{
 		"AUTHOR":"Matheus Maydana",
@@ -16,6 +16,8 @@ class Contato {
 
 	private $_push = false;
 
+	private $metas = array();
+
 	function __construct(){
 
 		$this->_func = new Model_Functions_Functions;
@@ -31,13 +33,15 @@ class Contato {
 
 		$mustache = array();
 
+		$this->metas['title'] = 'DevWeb - Contato';
+
 		if($this->_push === false){
 
-			echo $this->_cor->_visao($this->_cor->_layout('contato', 'contato'), $mustache);
+			echo $this->_cor->_visao($this->_cor->_layout('contato', 'contato', $this->metas), $mustache);
 
 		}else{
 
-			echo $this->_cor->push('contato', 'contato');
+			echo $this->_cor->push('contato', 'contato', $mustache, $this->metas);
 		}
 	}
 }

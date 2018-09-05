@@ -7,7 +7,13 @@ function openURL(href){
 			data: {push: 'push'},
 			cache: false,
 			success: function (result) {
-				$('#push-conteudo').html(result);
+				var resultado = jQuery.parseJSON(result);
+
+				$('#push-conteudo').html(resultado.html);
+
+				if(resultado.metas.title && resultado.metas.title !== ''){
+					$('title').text(resultado.metas.title);
+				}
 				if(window.scrollY > (document.getElementById('push-conteudo').offsetTop - 100)){
 
 					window.scroll(0, (document.getElementById('push-conteudo').offsetTop - 100));

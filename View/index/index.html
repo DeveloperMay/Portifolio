@@ -1,4 +1,48 @@
+<div lang="zxx">
+		<!-- <li class="li">
+						<div id="microphone" class="microphone">
+							<button onclick="UXSpeech.getpermissions(mic_top, 'microphone')" id="microphonetop" class="mic"><i class="icl ic-microphone"></i></button>
 
+						</div>
+					</li> -->
+						<!-- <li class="li">
+						<div id="microphone" class="microphone">
+							<button onclick="UXSpeech.getpermissions(mic_top, 'microphone')" id="microphonetop" class="mic"><i class="icl ic-microphone"></i></button>
+
+						</div>
+					</li> -->
+
+						<!-- <li class="li">
+						<div id="microphone" class="microphone">
+							<button onclick="UXSpeech.getpermissions(mic_top, 'microphone')" id="microphonetop" class="mic"><i class="icl ic-microphone"></i></button>
+
+						</div>
+					</li> -->
+						<!-- <li class="li">
+						<div id="microphone" class="microphone">
+							<button onclick="UXSpeech.getpermissions(mic_top, 'microphone')" id="microphonetop" class="mic"><i class="icl ic-microphone"></i></button>
+
+						</div>
+					</li> -->
+						<!-- <li class="li">
+						<div id="microphone" class="microphone">
+							<button onclick="UXSpeech.getpermissions(mic_top, 'microphone')" id="microphonetop" class="mic"><i class="icl ic-microphone"></i></button>
+
+						</div>
+					</li> -->
+
+						<!-- <li class="li">
+						<div id="microphone" class="microphone">
+							<button onclick="UXSpeech.getpermissions(mic_top, 'microphone')" id="microphonetop" class="mic"><i class="icl ic-microphone"></i></button>
+
+						</div>
+					</li> -->
+						<!-- <li class="li">
+						<div id="microphone" class="microphone">
+							<button onclick="UXSpeech.getpermissions(mic_top, 'microphone')" id="microphonetop" class="mic"><i class="icl ic-microphone"></i></button>
+
+						</div>
+					</li> -->
 <p data-anima="bottom" id="teste1">
 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -207,6 +251,7 @@
 	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </p>
+</div>
 <div style="position: fixed; top: 50%; left: 10px;">
 	<p>
 		<a href="#teste1">Teste1</a>
@@ -214,6 +259,7 @@
 	<p>
 		<a href="#teste2">Teste2</a>
 	</p>
+	<p>
 		<a href="#teste3">Teste3</a>
 	</p>
 	<p>
@@ -233,8 +279,17 @@
 	</p>
 </div>
 <script>
+if(window.jQuery){
 
-DW.smoothScroll.init();
+	$(document).ready(function() {
+	
+	    DW.smoothScroll.init();
+		/* Anima a index */
+		animaScroll();
+
+	});
+}
+
 window.box_anima = document.querySelectorAll('[data-anima]');
 
 window.animationClass = 'animate';
@@ -242,23 +297,27 @@ window.animationClass = 'animate';
 window.animaScroll = function(){
 	const windowTop = window.scrollY + ((window.innerHeight * 3.5) / 12);
 
-	box_anima.forEach(function(elemento){
+	if(box_anima){
 
-		if((windowTop) > elemento.offsetTop){
-			elemento.classList.add(animationClass);
-		}else{
-			elemento.classList.remove(animationClass);
-		}
-	});
+		box_anima.forEach(function(elemento){
+
+			if((windowTop) > elemento.offsetTop){
+				elemento.classList.add(animationClass);
+			}else{
+				elemento.classList.remove(animationClass);
+			}
+		});
+	}
 };
 
-DW.evts.add('scroll', window, function(){
+
+window.addEventListener('scroll', function(){
 
 	animaScroll();
 });
 
-(function(){
-	/* Anima a index */
+window.addEventListener('load', function(){
+
 	animaScroll();
-})();
+});
 </script>

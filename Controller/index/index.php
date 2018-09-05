@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	{
 		"AUTHOR":"Matheus Maydana",
@@ -20,6 +20,8 @@ class Index {
 
 	private $_lang;
 
+	private $metas = array();
+
 	function __construct(){
 
 		$this->_func = new Model_Functions_Functions;
@@ -33,19 +35,21 @@ class Index {
 		$this->_url = $this->_cor->getUrl();
 
 		$this->_lang = $this->_cor->getLang();
+
 	}
 
 	function index(){
 
 		$mustache = array();
+		$this->metas['title'] = 'DevWeb - Início';
 
 		if($this->_push === false){
 
-			echo $this->_cor->_visao($this->_cor->_layout('index', 'index'), $mustache);
+			echo $this->_cor->_visao($this->_cor->_layout('index', 'index', $this->metas), $mustache);
 
 		}else{
 
-			echo $this->_cor->push('index', 'index', $mustache);
+			echo $this->_cor->push('index', 'index', $mustache, $this->metas);
 		}
 	}
 }

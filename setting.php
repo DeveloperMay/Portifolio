@@ -14,7 +14,7 @@
 TRUE = DESENVOLVIMENTO
 FALSE = PRODUCAO (saveLogs);
 **/
-define('DEV', false);
+define('DEV', true);
 
 /**
 ** CONFIGURAÇÕES DO MVC

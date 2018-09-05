@@ -1,0 +1,125 @@
+@import '../variaveis.scss';
+@import '../functions.scss';
+@import '../reset/reset.scss';
+
+.btn-net{
+	background-color: rgba(0,0,0,0);
+	border: none;
+}
+nav {
+	display: block;
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	top: 0;
+
+	& .header-box{
+		display: inline-block;
+		margin: auto;
+		width: 100%;
+
+		& .header-a{
+			display: inline-block;
+			width: 60%;
+			text-align: left;
+			padding-left: 20px;
+			@include border-box;
+
+			font-size: 14px;
+			font-weight: 300;
+			color: $gray3;
+		}
+		& .header-b{
+			display: inline-block;
+			width: 40%;
+
+			& button i{
+
+				font-size: 14px;
+				font-weight: 300;
+				color: $gray3;
+			}
+		}
+	}
+
+	& .nv-box{
+		position: relative;
+		background-color: #ffffff;
+	}
+
+	& .nav-box{
+		margin: auto; 
+		max-width: 980px;
+		background-color: $gray4;
+		@include box-shadow(0px 3px 10px 2px rgba(0,0,0,0.5));
+		@include border-radius('0 0 10px 10px');
+		z-index: 2;
+	}
+
+	& .nav-fix {
+		position: fixed;
+		width: 100%;
+		max-width: 100%;
+		top: 0;
+		background: black;
+		@include animation(animation_msg .5s 1);
+
+		& a{
+
+			color: #ffffff;
+		}
+	}
+
+	& .nav-menu{
+		width: 33.3%;
+		display: inline-block;
+		padding: 20px;
+		@include border-box;
+	}
+}
+@include keyframes(animation_msg) {
+	0% {
+		top: -30px;
+		opacity: 0.4;
+	}
+	100% {
+		opacity: 0.6;
+	}
+}
+header {
+	display: block;
+	width: 100%;
+	height: 70vh;
+	background-image: url('/img/site/02.png');
+	background-size: cover;
+}
+#push-conteudo {
+	display: block;
+	position: relative;
+	margin: auto;
+	min-height: 70vh;
+	max-width: 980px;
+	padding: 40px;
+	background-color: #ffffff;
+	margin-top: -50px;
+	@include box-shadow(0px 3px 10px 2px rgba(0,0,0,0.3));
+	@include border-radius('10px');
+	@include border-box;
+}
+
+.footer{
+	display: flex;
+	width: 100%;
+	padding: 40px;
+	margin: auto;
+	background-color: $colorSecondary;
+	margin-top: -50px;
+	min-height: 250px;
+	height: 30vh;
+	color: #ffffff;
+	@include border-box;
+
+	& .foo-txt{
+		margin: auto;
+	}
+}

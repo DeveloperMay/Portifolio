@@ -1,20 +1,5 @@
 @include width;
 @include selection($colorSecondary, 70);
-#resposta-ajax{
-	display: block;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-}
-#ms-aviso-box{
-	position: absolute;
-	top: 50px;
-	width: 80vw;
-	z-index: 999999;
-	margin: auto;
-}
 .inline-block{
 	display: inline-block;
 }
@@ -28,75 +13,4 @@
 	position: absolute !important;
 	opacity: 0 !important;
 	overflow: auto;
-}
-.box-true{
-	background-color: #bdffbd;
-	padding: 5px;
-	text-align: center;
-	color: black;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	outline: none;
-}
-
-.box-neutro{
-	background-color: #cbefff;
-	padding: 5px;
-	text-align: center;
-	color: black;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	outline: none;
-}
-.box-false{
-	background-color: #ffceca;
-	padding: 5px;
-	text-align: center;
-	color: black;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	outline: none;
-}
-.header-neutro {
-	border-bottom-color: #cbefff;
-}
-.header-false {
-	border-bottom-color: #ffceca;
-}
-.header-true {
-	border-bottom-color: #bdffbd;
-}
-
-.footer-neutro {
-	border-top-color: #cbefff;
-}
-.footer-false {
-	border-top-color: #ffceca;
-}
-.footer-true {
-	border-top-color: #bdffbd;
-}
-.btn-net{
-	background-color: rgba(0,0,0,0);
-	border: none;
-}
-header {
-	display: block;
-	width: 100%;
-	height: 70vh;
-	background-image: url('/img/site/02.png');
-	background-size: cover;
-}
-#push-conteudo {
-	display: block;
-	position: relative;
-	margin: auto;
-	min-height: 70vh;
-	max-width: 980px;
-	padding: 40px;
-	background-color: #ffffff;
-	margin-top: -50px;
-	@include box-shadow(0px 3px 10px 2px rgba(0,0,0,0.3));
-	@include border-radius('10px');
-	@include border-box;
 }

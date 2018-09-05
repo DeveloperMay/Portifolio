@@ -71,18 +71,20 @@ class MVC_Maydana {
 
 		}else{
 
+			$controllador = str_replace('-', '', $this->url[1]);
+
 			// EXISTE ALGO NA URL, VERIFICAR SE OQUE TEM NA URL EXISTE UM CONTROLADOR
-			if(file_exists(DIR.'Controller/'.$this->url[1].'/'.$this->url[1].EXTENSAO_CONTROLADOR)){
+			if(file_exists(DIR.'Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR)){
 
 				// MONTA O CONTROLADOR E ACTION (SE TIVER NA URL)
-				$this->controller = $this->url[1];
-				$this->visao 	  = $this->url[1];
+				$this->controller = $controllador;
+				$this->visao 	  = $controllador;
 
 				try{
 
-					if(file_exists(DIR.'Controller/'.$this->url[1].'/'.$this->url[1].EXTENSAO_CONTROLADOR)){
+					if(file_exists(DIR.'Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR)){
 
-						require_once (DIR.'Controller/'.$this->url[1].'/'.$this->url[1].EXTENSAO_CONTROLADOR);
+						require_once (DIR.'Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR);
 		
 					}else{
 

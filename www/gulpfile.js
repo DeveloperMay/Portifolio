@@ -82,6 +82,21 @@ gulp.task('scss_producao', function(){
       })
       .pipe(notify({ title:projeto+' - Produção', message: msg }));
 });
+gulp.task('basico_producao', function(){
+  // Função compila o SCSS SEM Map para produção
+  var sassFiles = 'css/scss/basico/basico.scss',
+      cssDest = 'css';
+    gulp.src(sassFiles)
+      .pipe(rename('basico.min.css'))
+      .pipe(sass({outputStyle: 'compressed'}))
+      .pipe(gulp.dest(cssDest))
+      .pipe(sass({ errLogToConsole: false, }))
+      .on('error', function(err) {
+          notify().write(err);
+          this.emit('end');
+      })
+      .pipe(notify({ title:projeto+' - Produção', message: msg }));
+});
 
 gulp.task('MS_producao', function(cb){
   // Função compila o MS.JS SEM Map para produção
@@ -153,6 +168,22 @@ gulp.task('scss', function(){
       })
       .pipe(notify({ title:projeto+' - Desenvolvimento', message: msg }));
 });
+gulp.task('basico', function(){
+  // Função compila o SCSS com Map para Debugar
+  var sassFiles = 'css/scss/basico/basico.scss',
+      cssDest = 'css';
+    gulp.src(sassFiles)
+      .pipe(sourcemaps.init())
+      .pipe(sass({outputStyle: 'compiled'}))
+      .pipe(rename('basico.min.css'))
+      .pipe(sourcemaps.write('./map'))
+      .pipe(gulp.dest(cssDest))
+      .on('error', function(err) {
+          notify().write(err);
+          this.emit('end');
+      })
+      .pipe(notify({ title:projeto+' - Desenvolvimento', message: msg }));
+});
 
 
 /**
@@ -166,12 +197,14 @@ gulp.task('scss', function(){
 **/
 gulp.task('default', function() {
     gulp.watch(['css/scss/**/*.scss'],['scss']);
+    gulp.watch(['css/scss/basico/basico.scss'],['basico']);
     gulp.watch('js/js/MS/MS.js', ['MS']);
     gulp.watch('js/js/**.js', ['site']);
 });
 
 gulp.task('css', function() {
     gulp.watch('css/scss/**/*.scss',['scss']);
+    gulp.watch(['css/scss/basico/basico.scss'],['basico']);
 });
 
 gulp.task('js', function() {
@@ -181,6 +214,7 @@ gulp.task('js', function() {
 
 gulp.task('producao', function() {
   gulp.watch('css/scss/**/*.scss',['scss_producao']);
+    gulp.watch(['css/scss/basico/basico.scss'],['basico_producao']);
   gulp.watch('js/js/MS/MS.js', ['MS_producao']);
   gulp.watch('js/js/**.js', ['site_producao']);
 });

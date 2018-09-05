@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	{
 		"AUTHOR":"Matheus Maydana",
@@ -14,6 +14,8 @@ class Noscript{
 
 	private $_push = false;
 
+	private $metas = array();
+
 	function __construct(){
 
 		$this->_cor = new Model_GOD;
@@ -27,13 +29,15 @@ class Noscript{
 
 		$mustache = array();
 
+		$this->metas['title'] = 'DevWeb - Precisa ativar o JavaScript';
+
 		if($this->_push === false){
 
-			echo $this->_cor->_visao($this->_cor->_layout('noscript', 'noscript', 'login'), $mustache);
+			echo $this->_cor->_visao($this->_cor->_layout('noscript', 'noscript', 'login', $this->metas), $mustache);
 
 		}else{
 
-			echo $this->_cor->push('noscript', 'noscript', $mustache);
+			echo $this->_cor->push('noscript', 'noscript', $mustache, $this->metas);
 		}
 	}
 }
