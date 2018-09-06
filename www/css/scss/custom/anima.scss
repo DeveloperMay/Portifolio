@@ -1,5 +1,5 @@
 [data-anima] {
-	opacity: 0;
+	//opacity: 0;
 	transition: .3s;
 }
 
@@ -14,12 +14,12 @@
 	transform: translate3d(0, -50px, 0);
 }
 [data-anima="bottom"] {
-	transform: translate3d(0, +50px, 0);
+	//transform: translate3d(0, +50px, 0);
 }
 
 [data-anima].animate {
-	opacity: 1;
-	transform: translate3d(0,0,0);
+	//opacity: 1;
+	//transform: translate3d(0,0,0);
 }
 
 #box-progress {

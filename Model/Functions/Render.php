@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	"AUTHOR":"Matheus Maydana",
 	"CREATED_DATA": "09/04/2018",

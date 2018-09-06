@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 {
 	"AUTHOR":"MVC_Maydana",

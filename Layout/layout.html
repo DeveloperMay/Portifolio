@@ -44,31 +44,36 @@
 		<link rel="stylesheet" type="text/css" href="/css/icons/all.min.css{{cache}}">
 		<link rel="stylesheet" type="text/css" href="/css/site.min.css{{cache}}">
 		<script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-    			$(document).ready(function(){
-    				var lastScrollTop = 0;
-    
-    				$(window).on('scroll', function(){
-    
-    					var st = $(this).scrollTop();
-    					if(st > lastScrollTop){
-    						
-    						$('.nav-box').removeClass('nav-fix');
-    					
-    					}else{
-    						
-    						$('.nav-box').addClass('nav-fix');
-    					}
-    
-    					if(st < 50){
-    
-    						$('.nav-box').removeClass('nav-fix');
-    					}
-    					
-    					lastScrollTop = st;
-    				});
-    			});
-            });
+			document.addEventListener("DOMContentLoaded", function(event) {
+				$(document).ready(function(){
+
+					var lastScrollTop = 0;
+					$(window).on('wheel', function(){
+
+						var st = $(this).scrollTop() + 50;
+
+						if(st < 100){
+
+							$('.nav-box').removeClass('nav-fix');
+						}
+					});
+
+					$(window).on('scroll', function(){
+
+						var st = $(this).scrollTop();
+						if(st > lastScrollTop){
+
+							$('.nav-box').removeClass('nav-fix');
+
+						}else{
+							
+							$('.nav-box').addClass('nav-fix');
+						}
+
+						lastScrollTop = st;
+					});
+				});
+			});
 		</script>
 	</body>
 </html>

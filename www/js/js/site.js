@@ -1,5 +1,9 @@
 function openURL(href){
 
+		if(window.scrollY > (document.getElementById('push-conteudo').offsetTop - 100)){
+
+			DW.scroll.goTop();
+		}
 		var link = href;					 
 		$.ajax({															 
 			url: link,
@@ -14,91 +18,86 @@ function openURL(href){
 				if(resultado.metas.title && resultado.metas.title !== ''){
 					$('title').text(resultado.metas.title);
 				}
-				if(window.scrollY > (document.getElementById('push-conteudo').offsetTop - 100)){
 
-					window.scroll(0, (document.getElementById('push-conteudo').offsetTop - 100));
+				if(resultado.metas.descricao && resultado.metas.descricao !== ''){
+					$('meta[name="description"]').attr('content', resultado.metas.descricao);
 				}
+
+
 			}
 		});
+
 		window.history.pushState({href: href}, '', href);
 }
 
 $(document).ready(function() {
 
    $(document).on('click', 'a', function () {
-	 openURL($(this).attr("href"));
-	 return false;
-   });  
 
-   window.addEventListener('popstate', function(e){
-	  if(e.state)
-		openURL(e.state.href);
-   }); 
+   		if($(this)[0].hash == ''){
+
+			openURL($(this).attr("href"));
+   		}
+
+			return false;
+   });
 
 });
+
 window.ancoraativa = 0;
 window.DW = {
-	smoothScroll: {
-		init: function(dutation = 2000){
+	scroll: {
+		easeInOutQuart: function(time, from, distance, duration){
 
-			var menuItems = document.querySelectorAll('a[href^="#"]');
+			if ((time /= duration / 2) < 1){
 
-			function getScrollTopByHref(element) {
-			  var id = element.getAttribute('href');
-			  return document.querySelector(id).offsetTop;
+				return distance / 2 * time * time * time * time + from;
 			}
 
-			function scrollToPosition(to, dutation) {
-			  smoothScrollTo(0, to, dutation);
-			}
+			return -distance / 2 * ((time -= 2) * time * time * time - 2) + from;
+		},
+		smoothScrollTo: function(endX, endY, duration = 1000){
 
-			function scrollToIdOnClick(event) {
-				if(ancoraativa == 0 || ancoraativa == 3){
-					ancoraativa = 1;
-				  event.preventDefault();
-				  var to = getScrollTopByHref(event.currentTarget) - 80;
-				  scrollToPosition(to, dutation);
-				}
-			}
+			var startY = window.scrollY || window.pageYOffset;
+			var distanceY = endY - startY;
+			var startTime = new Date().getTime();
 
-			menuItems.forEach(function (item) {
-			  item.addEventListener('click', scrollToIdOnClick);
-			});
+			var timer = setInterval(function () {
 
-			function smoothScrollTo(endX, endY, duration) {
-			  var startX = window.scrollX || window.pageXOffset;
-			  var startY = window.scrollY || window.pageYOffset;
-			  var distanceX = endX - startX;
-			  var distanceY = endY - startY;
-			  var startTime = new Date().getTime();
-
-			  duration = typeof duration !== 'undefined' ? duration : 400;
-
-			  var easeInOutQuart = function easeInOutQuart(time, from, distance, duration) {
-				if ((time /= duration / 2) < 1){
-					return distance / 2 * time * time * time * time + from;
-				}
-
-				return -distance / 2 * ((time -= 2) * time * time * time - 2) + from;
-			  };
-
-			  var timer = setInterval(function () {
 				var time = new Date().getTime() - startTime;
-				var newX = easeInOutQuart(time, startX, distanceX, duration);
-				var newY = easeInOutQuart(time, startY, distanceY, duration);
+				var newY = DW.scroll.easeInOutQuart(time, startY, distanceY, duration);
 
-				if(ancoraativa === 3){
-					clearInterval(timer);
-				}
+				if (time >= duration || ancoraativa == 3){
 
-				if (time >= duration){
 					clearInterval(timer);
 					ancoraativa = 0;
 				}
 
-				window.scroll(newX, newY);
-			  }, 1000 / 60);
-			};
+				window.scroll(0, newY);
+			}, 1000 / 60);
+		},
+		goTop: function(){
+
+			var yorigem = window.scrollY;
+			var ydestino = DW.getById('push-conteudo').offsetTop;
+			DW.scroll.smoothScrollTo(yorigem, (ydestino - 100), 400);
+		},
+		init: function(e){
+
+			if(ancoraativa !== 2){
+
+				ancoraativa = 1;
+
+				if(ancoraativa === 1){
+					e.preventDefault();
+					ancoraativa = 2;
+					destino = e.target.hash.replace('#', '');
+					var yorigem = DW.positionAtTop(DW.targt(e));
+					var ydestino = DW.positionAtTop(DW.getById(destino));
+					DW.scroll.smoothScrollTo(yorigem, (ydestino - 100));
+				}
+
+			}
 		}
 	},
 	/* ADD EVENTS */
@@ -116,6 +115,15 @@ window.DW = {
 				}
 			}
 		}
+	},
+	positionAtTop: function(el){
+		posicao = 0;
+		if(el.offsetParent){
+			do{
+				posicao += el.offsetTop;
+			} while (el = el.offsetParent);
+		}
+		return posicao;
 	},
 	trigger: function (ev, el){
 		if(document.createEvent){
@@ -170,8 +178,8 @@ window.DW = {
 
 /* PAUSA O SCROLL - SUAVE QUANDO PRESSIONA AS TECLAS, PAGEDOWN, PAGEUP, SETA CIMA E BAIXO */
 $(window).on('keydown', function(event){
-	var tecla = event.keyCode;
-	if(tecla === 40 || tecla === 38 || tecla === 35 || tecla === 36 || tecla === 33 || tecla === 34){
+	var btn = event.keyCode;
+	if(btn === 38 || btn === 40 || btn === 35 || btn === 36 || btn === 34 || btn === 33 || btn === 32){
 		ancoraativa = 3;
 	}
 });

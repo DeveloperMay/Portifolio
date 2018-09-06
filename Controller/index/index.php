@@ -35,13 +35,13 @@ class Index {
 		$this->_url = $this->_cor->getUrl();
 
 		$this->_lang = $this->_cor->getLang();
-
 	}
 
 	function index(){
 
 		$mustache = array();
 		$this->metas['title'] = 'DevWeb - Início';
+		$this->metas['descricao'] = 'Site portifolio do Matheus Maydana, criado e desenvolvido por Matheus Maydana.';
 
 		if($this->_push === false){
 
