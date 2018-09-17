@@ -28,7 +28,7 @@ define('SAVE_SESSIONS', 'Sessions');
 define('DIR_CLASS', '');
 
 // É NECESSÁRIO QUE A SESSÃO/COOKIE SEJA A MESMA DO SITE
-session_save_path(DIR.'Sessions');
+session_save_path(DIR.SAVE_SESSIONS);
 session_set_cookie_params(9999999, '/', $_SERVER['SERVER_NAME']);
 
 /* USANDO HOST-VIRTUAL url é só /, no windows é ../mvc_maydana/ */
