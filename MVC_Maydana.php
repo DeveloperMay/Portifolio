@@ -57,7 +57,7 @@ class MVC_Maydana {
 
 			try{
 
-				require_once (DIR.'Controller/index/index.php');
+				require_once (DIR.SUBDOMINIO.'/Controller/index/index.php');
 
 			}catch(PDOException $e){
 
@@ -74,7 +74,7 @@ class MVC_Maydana {
 			$controllador = str_replace('-', '', $this->url[1]);
 
 			// EXISTE ALGO NA URL, VERIFICAR SE OQUE TEM NA URL EXISTE UM CONTROLADOR
-			if(file_exists(DIR.'Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR)){
+			if(file_exists(DIR.SUBDOMINIO.'/Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR)){
 
 				// MONTA O CONTROLADOR E ACTION (SE TIVER NA URL)
 				$this->controller = $controllador;
@@ -82,13 +82,13 @@ class MVC_Maydana {
 
 				try{
 
-					if(file_exists(DIR.'Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR)){
+					if(file_exists(DIR.SUBDOMINIO.'/Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR)){
 
-						require_once (DIR.'Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR);
+						require_once (DIR.SUBDOMINIO.'/Controller/'.$controllador.'/'.$controllador.EXTENSAO_CONTROLADOR);
 		
 					}else{
 
-						require_once (DIR.'Controller/index/index'.EXTENSAO_CONTROLADOR);
+						require_once (DIR.SUBDOMINIO.'/Controller/index/index'.EXTENSAO_CONTROLADOR);
 					}
 				
 
@@ -127,12 +127,11 @@ class MVC_Maydana {
 			}
 		}
 	}
-
 	public function error404(){
 
 		try{
 
-			require_once (DIR.'Controller/erro404/erro404'.EXTENSAO_CONTROLADOR);
+			require_once (DIR.SUBDOMINIO.'/Controller/erro404/erro404'.EXTENSAO_CONTROLADOR);
 
 		}catch(PDOException $e){
 
@@ -167,9 +166,9 @@ function _autoload($classe){
 
 	try{
 
-		if(is_file(DIR.$php.EXTENSAO_CONTROLADOR)){
+		if(is_file(DIR.DIR_CLASS.$php.EXTENSAO_CONTROLADOR)){
 
-			require_once (DIR.$php.EXTENSAO_CONTROLADOR);
+			require_once (DIR.DIR_CLASS.$php.EXTENSAO_CONTROLADOR);
 		}
 		
 	}catch(PDOException $e){

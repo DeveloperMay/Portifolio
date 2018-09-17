@@ -36,7 +36,7 @@ class Model_Query_Conexao{
 
 			try{
 
-				require_once (DIR.'Controller/erro404/erro404.php');
+				require_once (DIR.SUBDOMINIO.'/Controller/erro404/erro404.php');
 
 			}catch(PDOException $e){
 

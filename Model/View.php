@@ -21,7 +21,7 @@ class Model_View extends Model_Functions_Functions{
 
 		try{
 
-			if(file_exists(DIR.'View'.$this->lang.'/'.$controlador.'/'.$st_view.EXTENSAO_VISAO)){
+			if(file_exists(DIR.SUBDOMINIO.'/View'.$this->lang.'/'.$controlador.'/'.$st_view.EXTENSAO_VISAO)){
 
 				$this->st_view = $st_view;
 				$this->st_controlador = $controlador;
@@ -42,17 +42,17 @@ class Model_View extends Model_Functions_Functions{
 	function visao(){
 
 		try{
-
+			
 			if(isset($this->st_view)) {
 
 				$visao = $this->st_view;
 				$controlador = $this->st_controlador;
 
-				if(file_exists(DIR.'View'.$this->lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO)){
+				if(file_exists(DIR.SUBDOMINIO.'/View'.$this->lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO)){
 
 				$mustache = array();
 
-				$visao = str_replace(array_keys($mustache), array_values($mustache), file_get_contents(DIR.'View'.$this->lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO));
+				$visao = str_replace(array_keys($mustache), array_values($mustache), file_get_contents(DIR.SUBDOMINIO.'/View'.$this->lang.'/'.$controlador.'/'.$visao.EXTENSAO_VISAO));
 
 					return $visao;
 

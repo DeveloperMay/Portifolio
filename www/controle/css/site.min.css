@@ -1,0 +1,107 @@
+.width-5 {
+  width: 5%; }
+
+.width-10 {
+  width: 10%; }
+
+.width-15 {
+  width: 15%; }
+
+.width-20 {
+  width: 20%; }
+
+.width-25 {
+  width: 25%; }
+
+.width-30 {
+  width: 30%; }
+
+.width-35 {
+  width: 35%; }
+
+.width-40 {
+  width: 40%; }
+
+.width-45 {
+  width: 45%; }
+
+.width-50 {
+  width: 50%; }
+
+.width-55 {
+  width: 55%; }
+
+.width-60 {
+  width: 60%; }
+
+.width-65 {
+  width: 65%; }
+
+.width-70 {
+  width: 70%; }
+
+.width-75 {
+  width: 75%; }
+
+.width-80 {
+  width: 80%; }
+
+.width-85 {
+  width: 85%; }
+
+.width-90 {
+  width: 90%; }
+
+.width-95 {
+  width: 95%; }
+
+.width-100 {
+  width: 100%; }
+
+::-moz-selection {
+  background: #cff0fb; }
+
+::selection {
+  background: #cff0fb; }
+
+.inline-block {
+  display: inline-block; }
+
+.hidden {
+  margin-top: -9999px !important;
+  top: 0px;
+  left: 0px;
+  width: 1px;
+  height: 1px;
+  position: absolute !important;
+  opacity: 0 !important;
+  overflow: auto; }
+
+[data-anima] {
+  transition: .3s; }
+
+[data-anima="left"] {
+  transform: translate3d(-50px, 0, 0); }
+
+[data-anima="right"] {
+  transform: translate3d(50px, 0, 0); }
+
+[data-anima="top"] {
+  transform: translate3d(0, -50px, 0); }
+
+#box-progress {
+  background-color: red;
+  position: fixed;
+  height: 3px;
+  top: 0;
+  z-index: 99;
+  background: #b7deed;
+  background: -moz-linear-gradient(left, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, #b7deed), color-stop(50%, #71ceef), color-stop(51%, #21b4e2), color-stop(100%, #b7deed));
+  background: -webkit-linear-gradient(left, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
+  background: -o-linear-gradient(left, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
+  background: -ms-linear-gradient(left, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
+  background: linear-gradient(to right, #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed', GradientType=1 ); }
+
+/*# sourceMappingURL=map/site.min.css.map */
